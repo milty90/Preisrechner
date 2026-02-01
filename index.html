@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Preisrechner</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="main">
+      <div class="calculator">
+        <h2>Preisrechner</h2>
+        <div class="inputGroup" id="inputGroup"></div>
+        <div class="line"></div>
+
+        <div class="result">
+          <h3 class="totalPriceLabel">Gesamtpreis:</h3>
+          <h3 id="totalPriceDisplay" class="">0.00 €</h3>
+        </div>
+        <div class="buttons">
+          <button id="resetButton">Zurücksetzen</button>
+          <button id="onSiteButton">Vor Ort</button>
+          <button id="deliveryButton">Liefern</button>
+        </div>
+      </div>
+      <div class="order">
+        <h2 class="orderTitle">Bestellung</h2>
+        <div class="orderList" id="orderList"></div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
