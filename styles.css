@@ -1,5 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&display=swap");
+
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Afacad Flux", Arial, sans-serif;
   background-color: #f4f4f4;
   margin-top: 40px;
 }
@@ -15,15 +17,17 @@ body {
   margin: auto;
   padding: 20px;
   background-color: #f4f4f4;
+  font-family: inherit;
   color: #333;
 }
 
 h2 {
   margin-top: 0.5em;
+  font-family: inherit;
 }
 
 .calculator {
-  width: 650px;
+  width: 750px;
   max-height: 700px;
   box-sizing: border-box;
   text-align: center;
@@ -39,7 +43,7 @@ h2 {
 
 .order {
   width: 250px;
-  height: 688px;
+  height: 695px;
   margin: 10px;
   padding: 10px;
   box-sizing: border-box;
@@ -53,7 +57,7 @@ h2 {
 
 .orderList {
   overflow-y: auto;
-  height: 570px;
+  height: 577px;
   margin-bottom: 10px;
 }
 
@@ -72,6 +76,7 @@ h2 {
 .orderLabel {
   font-weight: bold;
   color: #666;
+  margin: 0;
   padding-left: 15px;
 }
 
@@ -107,13 +112,29 @@ h2 {
 }
 
 .inputItem {
-  border: 2px solid #ccc;
-  background-color: #eee;
-  border-radius: 15px;
-  padding: 15px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  background: #fbca1f;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 0.6em 1.3em;
+  font-weight: 900;
+  font-size: 18px;
+  border: 3px solid black;
+  border-radius: 0.4em;
+  box-shadow: 0.1em 0.1em;
+  cursor: pointer;
+}
+
+.inputItem:hover {
+  transform: translate(-0.05em, -0.05em);
+  box-shadow: 0.15em 0.15em;
+}
+
+.inputItem:active {
+  transform: translate(0.05em, 0.05em);
+  box-shadow: 0.05em 0.05em;
 }
 
 .itemLabel {
@@ -124,18 +145,13 @@ h2 {
 .itemPrice {
   font-size: 17px;
   font-weight: bold;
-  color: #008cba;
-}
-
-.inputItem:hover {
-  border: 2px solid #008cba;
-  cursor: pointer;
-  transform: scale(1.03);
+  color: #444;
 }
 
 .buttons {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  font-family: Arial, Helvetica, sans-serif;
   align-items: center;
   justify-content: center;
   margin: 10px;
@@ -144,37 +160,51 @@ h2 {
 
 #resetButton {
   background-color: #f44336;
+  text-shadow: 1px 1px 3px #fff;
   grid-column: 1 / span 2;
   width: inherit;
-  color: white;
-  padding: 15px 32px;
   text-align: center;
-  text-decoration: none;
   display: inline-block;
   font-size: 18px;
   margin: 5px;
-  border: none;
-  border-radius: 5px;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 0.6em 1.3em;
+  font-weight: 900;
+  border: 3px solid black;
+  border-radius: 0.4em;
+  box-shadow: 0.1em 0.1em;
   cursor: pointer;
 }
 
 #resetButton:hover {
-  background-color: #d32f2f;
+  transform: translate(-0.05em, -0.05em);
+  box-shadow: 0.15em 0.15em;
+}
+
+#resetButton:active {
+  transform: translate(0.05em, 0.05em);
+  box-shadow: 0.05em 0.05em;
 }
 
 #onSiteButton,
 #deliveryButton {
   background-color: #008cba;
-  color: white;
+
   width: inherit;
-  padding: 15px 32px;
+  text-shadow: #fff 1px 1px 3px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 18px;
+
   margin: 5px;
-  border: none;
-  border-radius: 5px;
+
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 0.6em 1.3em;
+  font-weight: 900;
+  font-size: 18px;
+  border: 3px solid black;
+  border-radius: 0.4em;
+  box-shadow: 0.1em 0.1em;
   cursor: pointer;
 }
 
@@ -182,10 +212,54 @@ h2 {
   background-color: #45a049;
 }
 
-#onSiteButton:hover {
-  background-color: #388e3c;
+#onSiteButton:hover,
+#deliveryButton:hover {
+  transform: translate(-0.05em, -0.05em);
+  box-shadow: 0.15em 0.15em;
 }
 
-#deliveryButton:hover {
-  background-color: #0279a0;
+#onSiteButton:active,
+#deliveryButton:active {
+  transform: translate(0.05em, 0.05em);
+  box-shadow: 0.05em 0.05em;
+}
+
+.modal-overlay {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal-content {
+  position: relative;
+  background-color: #fbca1f;
+  border: #000000 4px solid;
+  margin: 15% auto;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.modal-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: start;
+}
+
+.close-button {
+  position: absolute;
+  top: 4px;
+  right: 15px;
+  cursor: pointer;
+  font-size: 34px;
+}
+.close-button:hover {
+  color: #bc0000;
 }

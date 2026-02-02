@@ -14,8 +14,8 @@
         <div class="line"></div>
 
         <div class="result">
-          <h3 class="totalPriceLabel">Gesamtpreis:</h3>
-          <h3 id="totalPriceDisplay" class="">0.00 €</h3>
+          <h2 class="totalPriceLabel">Gesamtpreis:</h2>
+          <h2 id="totalPriceDisplay" class="">0.00 €</h2>
         </div>
         <div class="buttons">
           <button id="resetButton">Zurücksetzen</button>
@@ -24,8 +24,16 @@
         </div>
       </div>
       <div class="order">
-        <h2 class="orderTitle">Bestellung</h2>
+        <h2 class="orderTitle">Bestellung:</h2>
         <div class="orderList" id="orderList"></div>
+      </div>
+    </div>
+
+    <div id="myModal" class="modal-overlay">
+      <div class="modal-content">
+        <h2 class="modal-title">Quittung</h2>
+        <span class="close-button">&times;</span>
+        <p id="modal-content"></p>
       </div>
     </div>
     <script src="script.js"></script>

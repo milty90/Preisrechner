@@ -31,9 +31,9 @@ const createOrderItemElement = (name, priceText) => {
           </div>`;
 };
 
-const checkout = (sum, isDelivery, callback) => {
+const checkout = (sum, isDelivery, modal, callback) => {
   if (sum === 0) {
-    alert("Bitte fügen Sie Artikel hinzu.");
+    modal("Bitte fügen Sie Artikel hinzu.");
     return;
   }
 
@@ -41,12 +41,12 @@ const checkout = (sum, isDelivery, callback) => {
   const totalSum = isDelivery ? sum + deliveryFee : sum;
   const deliveryText = isDelivery ? "Ihre Bestellung" : "Ihren Einkauf";
 
-  alert(
-    "Vielen Dank für " +
-      deliveryText +
-      "! Ihr Gesamtbetrag beträgt " +
-      totalSum.toFixed(2) +
-      " Euro.",
+  modal(
+    `Vielen Dank für ${deliveryText} im Wert von ${totalSum.toFixed(2)} €. ${
+      isDelivery
+        ? `Die Liefergebühr von ${deliveryFee.toFixed(2)} € ist enthalten.`
+        : ""
+    }`,
   );
 
   callback();
@@ -59,6 +59,19 @@ document.addEventListener("DOMContentLoaded", function () {
   const clearButton = document.getElementById("resetButton");
   const onSiteButton = document.getElementById("onSiteButton");
   const deliveryButton = document.getElementById("deliveryButton");
+
+  const modal = document.getElementById("myModal");
+  const closeModalButton = document.getElementsByClassName("close-button")[0];
+
+  function openModal(message) {
+    modal.style.display = "block";
+    const modalContent = document.getElementById("modal-content");
+    modalContent.textContent = message;
+  }
+
+  function closeModal() {
+    modal.style.display = "none";
+  }
 
   let total = 0;
 
@@ -79,13 +92,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
   menuContainer.addEventListener("click", (event) => {
     const childrenItems = [...menuContainer.children];
-    console.log(childrenItems);
+    console.log(...menuContainer.children);
 
     const itemElement = event.target.closest(".inputItem");
-    if (!itemElement) return;
+    console.log(itemElement);
 
     const index = childrenItems.indexOf(itemElement);
+    console.log(index);
     const selectedItem = items[index];
+    console.log(selectedItem);
 
     const orderElement = createOrderItemElement(
       selectedItem.name,
@@ -102,11 +117,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
   clearButton.addEventListener("click", clearOrder);
 
+  closeModalButton.addEventListener("click", closeModal);
+
   onSiteButton.addEventListener("click", () => {
-    checkout(total, false, clearOrder);
+    checkout(total, false, openModal, clearOrder);
   });
 
   deliveryButton.addEventListener("click", () => {
-    checkout(total, true, clearOrder);
+    checkout(total, true, openModal, clearOrder);
   });
 });
