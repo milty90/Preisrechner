@@ -33,7 +33,7 @@ const createOrderItemElement = (name, priceText) => {
 
 const checkout = (sum, isDelivery, modal, callback) => {
   if (sum === 0) {
-    modal("Bitte fügen Sie Artikel hinzu.");
+    modal("Achtung!", "Bitte fügen Sie Artikel hinzu.");
     return;
   }
 
