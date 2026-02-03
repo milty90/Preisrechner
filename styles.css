@@ -1,8 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&display=swap");
 
+:root {
+  --fontfamily: "Afacad Flux", Arial, sans-serif;
+  --backgroundcolor: #f4f4f4;
+  --primary-color: #fbca1f;
+  --linecolor: #e0e0e0;
+}
+
 body {
-  font-family: "Afacad Flux", Arial, sans-serif;
-  background-color: #f4f4f4;
+  font-family: var(--fontfamily);
+  background-color: var(--backgroundcolor);
   margin-top: 40px;
 }
 
@@ -16,19 +23,19 @@ body {
   height: max-content;
   margin: auto;
   padding: 20px;
-  background-color: #f4f4f4;
-  font-family: inherit;
+  background-color: var(--backgroundcolor);
+  font-family: var(--fontfamily);
   color: #333;
 }
 
 h2 {
   margin-top: 0.5em;
-  font-family: inherit;
+  font-family: var(--fontfamily);
 }
 
 .calculator {
   width: 750px;
-  max-height: 700px;
+  height: 720px;
   box-sizing: border-box;
   text-align: center;
   margin: 10px;
@@ -43,7 +50,7 @@ h2 {
 
 .order {
   width: 250px;
-  height: 695px;
+  height: 720px;
   margin: 10px;
   padding: 10px;
   box-sizing: border-box;
@@ -57,7 +64,8 @@ h2 {
 
 .orderList {
   overflow-y: auto;
-  height: 577px;
+  scrollbar-width: none;
+  height: 600px;
   margin-bottom: 10px;
 }
 
@@ -81,7 +89,7 @@ h2 {
 }
 
 .orderLine {
-  background-color: #e0e0e0;
+  background-color: var(--linecolor);
   height: 2px;
   margin: 10px 0;
 }
@@ -90,8 +98,7 @@ h2 {
   display: flex;
   justify-content: space-between;
   margin: 30px 20px 10px 20px;
-
-  background-color: #e0e0e0;
+  background-color: var(--linecolor);
   height: 2px;
 }
 
@@ -115,12 +122,11 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  background: #fbca1f;
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--primary-color);
+  font-family: var(--fontfamily);
   padding: 0.6em 1.3em;
   font-weight: 900;
-  font-size: 18px;
+  font-size: 20px;
   border: 3px solid black;
   border-radius: 0.4em;
   box-shadow: 0.1em 0.1em;
@@ -138,7 +144,7 @@ h2 {
 }
 
 .itemLabel {
-  font-size: 16px;
+  font-size: 18px;
   margin-bottom: 5px;
 }
 
@@ -151,7 +157,6 @@ h2 {
 .buttons {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  font-family: Arial, Helvetica, sans-serif;
   align-items: center;
   justify-content: center;
   margin: 10px;
@@ -167,7 +172,7 @@ h2 {
   display: inline-block;
   font-size: 18px;
   margin: 5px;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--fontfamily);
   padding: 0.6em 1.3em;
   font-weight: 900;
   border: 3px solid black;
@@ -189,16 +194,13 @@ h2 {
 #onSiteButton,
 #deliveryButton {
   background-color: #008cba;
-
   width: inherit;
   text-shadow: #fff 1px 1px 3px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-
   margin: 5px;
-
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--fontfamily);
   padding: 0.6em 1.3em;
   font-weight: 900;
   font-size: 18px;
@@ -237,7 +239,7 @@ h2 {
 
 .modal-content {
   position: relative;
-  background-color: #fbca1f;
+  background-color: var(--primary-color);
   border: #000000 4px solid;
   margin: 15% auto;
   padding: 20px;
@@ -260,6 +262,7 @@ h2 {
   cursor: pointer;
   font-size: 34px;
 }
+
 .close-button:hover {
   color: #bc0000;
 }

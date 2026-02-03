@@ -37,6 +37,14 @@ const checkout = (sum, isDelivery, modal, callback) => {
     return;
   }
 
+  if (isDelivery && sum < 20) {
+    modal(
+      `Der Mindestbestellwert für eine Lieferung beträgt 20 €. 
+      Ihr aktueller Bestellwert ist ${sum.toFixed(2)} €. Bitte fügen Sie weitere Artikel hinzu.`,
+    );
+    return;
+  }
+
   const deliveryFee = 2.5;
   const totalSum = isDelivery ? sum + deliveryFee : sum;
   const deliveryText = isDelivery ? "Ihre Bestellung" : "Ihren Einkauf";
@@ -61,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const deliveryButton = document.getElementById("deliveryButton");
 
   const modal = document.getElementById("myModal");
-  const closeModalButton = document.getElementsByClassName("close-button")[0];
+  const closeModalButton = document.getElementById("close-button");
 
   function openModal(message) {
     modal.style.display = "block";
