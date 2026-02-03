@@ -17,28 +17,18 @@ const items = [
   { name: "Leberkäse", price: "4.00" },
 ];
 
-const createMenuItemElement = (name, priceText) => {
-  return `<div class="inputItem">
-            <span class="itemLabel">${name}</span>
-            <span class="itemPrice">${priceText} €</span>
-          </div>`;
-};
+const checkout = (sum, isDelivery, modalCallback, clearOrderCallback) => {
+  const deliveryFee = 2.5;
+  const totalSum = isDelivery ? sum + deliveryFee : sum;
+  const deliveryText = isDelivery ? "Ihre Bestellung" : "Ihren Einkauf";
 
-const createOrderItemElement = (name, priceText) => {
-  return `<div class="orderItem">
-            <p class="orderLabel">${name}: ${priceText} €</p>
-            <div class="orderLine"></div>
-          </div>`;
-};
-
-const checkout = (sum, isDelivery, modal, callback) => {
   if (sum === 0) {
-    modal("Achtung!", "Bitte fügen Sie Artikel hinzu.");
+    modalCallback("Achtung!", "Bitte fügen Sie Artikel hinzu.");
     return;
   }
 
   if (isDelivery && sum < 20) {
-    modal(
+    modalCallback(
       "Achtung!",
       `Der Mindestbestellwert für eine Lieferung beträgt 20 €. 
       Ihr aktueller Bestellwert ist ${sum.toFixed(2)} €. Bitte fügen Sie weitere Artikel hinzu.`,
@@ -46,11 +36,7 @@ const checkout = (sum, isDelivery, modal, callback) => {
     return;
   }
 
-  const deliveryFee = 2.5;
-  const totalSum = isDelivery ? sum + deliveryFee : sum;
-  const deliveryText = isDelivery ? "Ihre Bestellung" : "Ihren Einkauf";
-
-  modal(
+  modalCallback(
     "Quittung!",
     `Vielen Dank für ${deliveryText} im Wert von ${totalSum.toFixed(2)} €. ${
       isDelivery
@@ -59,7 +45,7 @@ const checkout = (sum, isDelivery, modal, callback) => {
     }`,
   );
 
-  callback();
+  clearOrderCallback();
 };
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -73,10 +59,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const modal = document.getElementById("myModal");
   const closeModalButton = document.getElementById("close-button");
 
-  function openModal(titel, message) {
+  function openModal(title, message) {
     modal.style.display = "block";
     const modalTitle = document.getElementById("modal-title");
-    modalTitle.textContent = titel;
+    modalTitle.textContent = title;
     const modalContent = document.getElementById("modal-content");
     modalContent.textContent = message;
   }
@@ -95,10 +81,15 @@ document.addEventListener("DOMContentLoaded", function () {
     orderList.innerHTML = "";
     total = 0;
     updateTotalDisplay();
+    console.log("Order cleared");
   };
 
   items.forEach((item) => {
-    const menuItem = createMenuItemElement(item.name, item.price);
+    const menuItem = `<div class="inputItem">
+            <span class="itemLabel">${item.name}</span>
+            <span class="itemPrice">${item.price} €</span>
+          </div>`;
+
     menuContainer.innerHTML += menuItem;
   });
 
@@ -111,13 +102,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const index = childrenItems.indexOf(itemElement);
     console.log(index);
+
     const selectedItem = items[index];
     console.log(selectedItem);
 
-    const orderElement = createOrderItemElement(
-      selectedItem.name,
-      selectedItem.price,
-    );
+    const orderElement = `<div class="orderItem">
+            <p class="orderLabel">${selectedItem.name}: 
+            ${selectedItem.price} €</p>
+            <div class="orderLine"></div>
+          </div>`;
 
     orderList.innerHTML += orderElement;
 
