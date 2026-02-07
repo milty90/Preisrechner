@@ -28,6 +28,13 @@ const deliveryButton = document.getElementById("deliveryButton");
 const modal = document.getElementById("myModal");
 const closeModalButton = document.getElementById("close-button");
 
+function formatCurrency(price) {
+  return `${(price / 100).toLocaleString("de-DE", {
+    style: "currency",
+    currency: "EUR",
+  })}`;
+}
+
 function openModal(title, message) {
   modal.style.display = "block";
   const modalTitle = document.getElementById("modal-title");
@@ -41,51 +48,49 @@ function closeModal() {
 }
 
 const updateTotalDisplay = () => {
-  resultContainer.textContent = `${(total / 100).toFixed(2)} €`;
+  resultContainer.textContent = formatCurrency(total);
 };
 
 const clearOrder = () => {
   orderList.innerHTML = "";
   total = 0;
   updateTotalDisplay();
-  console.log("Order cleared");
 };
 
 function renderMenu() {
   items.forEach((item) => {
     const menuItem = `<div class="inputItem">
             <span class="itemLabel">${item.name}</span>
-            <span class="itemPrice">${(item.price / 100).toFixed(2)} €</span>
+            <span class="itemPrice">${formatCurrency(item.price)}</span>
           </div>`;
     menuContainer.innerHTML += menuItem;
   });
 }
 
-function calulateTotal() {
-  menuContainer.addEventListener("click", (event) => {
-    const childrenItems = [...menuContainer.children];
-    console.log(...menuContainer.children);
-
-    const itemElement = event.target.closest(".inputItem");
-    console.log(itemElement);
-
-    const index = childrenItems.indexOf(itemElement);
-    console.log(index);
-
-    const selectedItem = items[index];
-    console.log(selectedItem);
-
-    const orderElement = `<div class="orderItem">
-            <p class="orderLabel">${selectedItem.name}: 
-            ${(selectedItem.price / 100).toFixed(2)} €</p>
+function renderOrder(name, price) {
+  const orderElement = `<div class="orderItem">
+            <p class="orderLabel">${name}: 
+            ${formatCurrency(price)}</p>
             <div class="orderLine"></div>
           </div>`;
+  orderList.innerHTML += orderElement;
+}
 
-    orderList.innerHTML += orderElement;
+function calculateTotal(price) {
+  total += price;
+}
+
+function renderTotal() {
+  menuContainer.addEventListener("click", (event) => {
+    const childrenItems = [...menuContainer.children];
+    const itemElement = event.target.closest(".inputItem");
+    const index = childrenItems.indexOf(itemElement);
+    const selectedItem = items[index];
+
+    renderOrder(selectedItem.name, selectedItem.price);
 
     const priceValue = selectedItem.price;
-    total += priceValue;
-    console.log(total);
+    calculateTotal(priceValue);
     updateTotalDisplay();
   });
 }
@@ -104,16 +109,16 @@ const checkout = (sum, isDelivery, modalCallback, clearOrderCallback) => {
     modalCallback(
       "Achtung!",
       `Der Mindestbestellwert für eine Lieferung beträgt 20 €. 
-      Ihr aktueller Bestellwert ist ${(sum / 100).toFixed(2)} €. Bitte fügen Sie weitere Artikel hinzu.`,
+      Ihr aktueller Bestellwert ist ${formatCurrency(sum)}. Bitte fügen Sie weitere Artikel hinzu.`,
     );
     return;
   }
 
   modalCallback(
     "Quittung!",
-    `Vielen Dank für ${deliveryText} im Wert von ${(totalSum / 100).toFixed(2)} €. ${
+    `Vielen Dank für ${deliveryText} im Wert von ${formatCurrency(totalSum)}. ${
       isDelivery
-        ? `Die Liefergebühr von ${(deliveryFee / 100).toFixed(2)} € ist enthalten.`
+        ? `Die Liefergebühr von ${formatCurrency(deliveryFee)} ist enthalten.`
         : ""
     }`,
   );
@@ -122,7 +127,7 @@ const checkout = (sum, isDelivery, modalCallback, clearOrderCallback) => {
 };
 
 renderMenu();
-calulateTotal();
+renderTotal();
 
 clearButton.addEventListener("click", clearOrder);
 
